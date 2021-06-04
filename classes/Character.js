@@ -11,6 +11,50 @@ class Character extends Thing {
 		this.sprite.display();
 	}
 
+	update() {
+		// user input - move character around
+		var isWalkingR = false;
+		var isWalkingL = false;
+		var isWalkingU = false;
+		var isWalkingD = false;
+
+		//Moves character around
+		if (keyIsDown(RIGHT_ARROW)) {
+			this.speedX = 8;
+			isWalkingR = true;
+		} else if (keyIsDown(LEFT_ARROW)) {
+		 	this.speedX = -8;
+		 	isWalkingL = true;
+		} else {
+			this.speedX = 0;
+		}
+
+		if (keyIsDown(DOWN_ARROW)) {
+			this.speedY = 8;
+			isWalkingD = true;
+		} else if (keyIsDown(UP_ARROW)) {
+			this.speedY = -8;
+			isWalkingU = true;
+		} else {
+			this.speedY = 0;
+		}
+
+		if (isWalkingR) {
+			this.changeAnimation('walkright');
+		} else if (isWalkingL) {
+			this.changeAnimation('walkleft');
+		} else if (isWalkingD) {
+			this.changeAnimation('walkdown');
+		} else if (isWalkingU) {
+			this.changeAnimation('walkup');
+		} else {
+			this.changeAnimation('idle');
+		}
+
+		super.update();
+
+	}
+
 	changeAnimation(label) {
 		this.sprite.changeAnimation(label);
 	}

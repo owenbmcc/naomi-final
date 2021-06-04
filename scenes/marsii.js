@@ -164,6 +164,12 @@ class marsii extends Scene {
 		};*/
 		// this.npc = new Character(npcAnimations, width - 200, height/2);
 
+		this.items = {
+			icepick: { has: 'astShip', m: " (You recieved the cutting tool) ", },
+			empty_battery: { has: 'astShip', m: " (You recieved the empty battery) " },
+			backuplog: { has: '' }
+		};
+
         this.character = new Character(animations);
         this.character.changeAnimation('idle');
 
@@ -254,7 +260,10 @@ class marsii extends Scene {
         this.startcounter = false;
         this.fixcounter = 0;
         this.savedTime = millis();
-        this.totalTime = 1000;      
+        this.totalTime = 1000;
+
+
+
         
     }
 
@@ -1086,6 +1095,8 @@ class marsii extends Scene {
         //this.cosmicAlien.update();
         this.astShip.display();
         if (this.astShip.overlap(this.character)) {
+            // this.astShip.displayDialog();
+            this.astShip.updateDialog();
             /* style dialog */
 
             // console.log("Astronaut Ship", this.astShip.dialogCount);
@@ -1288,17 +1299,12 @@ class marsii extends Scene {
             }
 
 
+
             text(dialog, this.astShip.x, this.astShip.y - 100, 200, 200);
             text(humanDialogSh, this.character.x, this.character.y - 20, 200, 300);
-            fill(255);
-            text("hit enter", this.astShip.x, this.astShip.y + 50);
 
-            if (keyIsDown(ENTER) && !this.hitEnter) {
-                this.astShip.dialogCount = this.astShip.dialogCount + 0.5;
-                this.hitEnter = true;
-            } else if (!keyIsDown(ENTER)) {
-                this.hitEnter = false;
-            }
+            fill(255);
+			text("hit enter", this.astShip.x, this.astShip.y + 50);
         }
 
 
