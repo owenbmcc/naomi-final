@@ -6,7 +6,7 @@ class marsii extends Scene {
         sceneManager['badend'] = new Scene("EvilEnd");
 	}
     //When I come back I'll figure out how to get the sounds to work, make sure everything works right, and make sure the animations work correctly
-*/    
+*/
     preload() {
 
         //Main character - Astronaut
@@ -147,8 +147,8 @@ class marsii extends Scene {
             walkup: loadAnimation(this.walkup),
             walkdown: loadAnimation(this.walkdown),
             idle: loadAnimation(this.idle)
-            
-            
+
+
             //CosmicNorm: loadAnimation(this.cosmicAlienNorm),
             //CosmicQC: loadAnimation(this.cosmicAlienQC),
 
@@ -160,7 +160,7 @@ class marsii extends Scene {
              samattack:this.samattackSheet,
              ellaattack:this.ellaattackSheet,
              joeattack:this.joeattackSheet
-            
+
 		};*/
 		// this.npc = new Character(npcAnimations, width - 200, height/2);
 
@@ -245,17 +245,17 @@ class marsii extends Scene {
         // Needed from Static Alien
         this.partBattery = false;
         this.fullBattery = false;
-        
-        
+
+
         this.staticAlienQC = loadSpriteSheet('images/marsii/npcs/staticAlienqc.png', 64, 128, 8);
         this.staticAlienBQC = loadSpriteSheet('images/marsii/npcs/staticAlienbqc.png', 64, 128, 4);
         this.staticAlienSheet = this.staticAlienNorm;
-        
+
         this.startcounter = false;
         this.fixcounter = 0;
         this.savedTime = millis();
-        this.totalTime = 1000;      
-        
+        this.totalTime = 1000;
+
     }
 
     start() {
@@ -510,7 +510,7 @@ class marsii extends Scene {
                 // console.log("Black Hole Need", this.bhNeed);
                 //this.bgSounds[1].play();
             } else if (this.liquidAlien.dialogCount == 4.5) {
-                humanDialogL = "That sounds hard to find, is there anything else you would want?";
+                humanDialogL = "That sounds... hard to find, is there anything else you would want?";
             } else if (this.liquidAlien.dialogCount == 5) {
                 dialog = "No.";
             } else if (this.liquidAlien.dialogCount == 5.5) {
@@ -640,9 +640,9 @@ class marsii extends Scene {
             } else if (this.creepAlien.dialogCount == 2) {
                 dialog = "Probably not. Unless you need something heated up";
             } else if (this.creepAlien.dialogCount == 2.5) {
-                humanDialogCr = "You look strong, do you think you can you lift a ship?";
+                humanDialogCr = "Hm, You look strong, do you think you can you lift a ship?";
             } else if (this.creepAlien.dialogCount == 3) {
-                dialog = "Probably, but it would talk a lot of effort, I wouldn't do it unless it was worth it";
+                dialog = "Probably, but it would take a lot of effort, I wouldn't do it unless it was worth it";
             } else if (this.creepAlien.dialogCount == 3.5) {
                 humanDialogCr = "If I get you something that makes it worth it will you do it?";
             } else if (this.creepAlien.dialogCount == 4) {
@@ -753,11 +753,11 @@ class marsii extends Scene {
             } else if (this.plantAlien.dialogCount == 1) {
                 dialog = "Depends. What do you need?";
             } else if (this.plantAlien.dialogCount == 1.5) {
-                humanDialogP = "Energy, a map, ship repairs and my ship uprighted.";
+                humanDialogP = "Mainly ship repairs and my ship uprighted.";
             } else if (this.plantAlien.dialogCount == 2) {
                 dialog = "Well, I've built a ship, so I can probably repair yours. What species made it?";
             } else if (this.plantAlien.dialogCount == 2.5) {
-                humanDialogP = "I don't really know... I'm not even sure how I got here. I was in my ship one minute and I just woke up in there and crashed shortly after";
+                humanDialogP = "I don't really know.... I'm not even sure how I got here. I was in my ship one minute and I just woke up in there and crashed shortly after";
             } else if (this.plantAlien.dialogCount == 3) {
                 dialog = "Interesting. It's probably a species from around here. Some of them like to abduct others. I can probably repair it.";
             } else if (this.plantAlien.dialogCount == 3.5) {
@@ -842,11 +842,11 @@ class marsii extends Scene {
             } else if (this.plantAlien.dialogCount == 17.5) {
                 this.plantAlien.dialogCount = 17;
             }
-            
-            
-            
-            
-            
+
+
+
+
+
             /*
             if (this.startcounter = true){
             var passedTime = millis() - this.savedTime;
