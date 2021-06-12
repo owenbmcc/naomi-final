@@ -197,22 +197,22 @@ class marsii extends Scene {
         // Items
 
         // Needed for Liquid Alien
-        this.bhNeed = false;
-        this.icepick = false;
+        this.bhNeed = false; // black hole surfaces -- revealed by liquid alien
+        this.icepick = false; // collect from ship -- surfaced at beginning -- unlocks something
 
         // Needed from Liquid Alien
-        this.frozenmap = false;
+        this.frozenmap = false; // take if you freeze alien and take stuff -- character choice
         this.frozenkey = false;
-        this.unmarkedmap = false;
+        this.unmarkedmap = false;  // get if you don't freeze alien
 
 
         // Needed for Cosmic Alien
-        this.reallog = false;
+        this.reallog = false; // one ending of interaction
         this.fakelog = false;
-        this.logneed = false;
+        this.logneed = false; // reveals multiple items
         this.blackhole = false;
 
-        this.secondchatC = false;
+        this.secondchatC = false; // number of conversations, unlock dialog
 
         // Needed from Cosmic Alien
         this.markedmap = false;
@@ -222,7 +222,7 @@ class marsii extends Scene {
         this.astJournal = false;
 
         // Needed from Creepy Alien
-        this.shipUprighted = false;
+        this.shipUprighted = false;  // state change of npc or game ?
         this.unfrozenkey = false;
 
         //Needed for Creepy Alien
@@ -257,13 +257,11 @@ class marsii extends Scene {
         this.staticAlienBQC = loadSpriteSheet('images/marsii/npcs/staticAlienbqc.png', 64, 128, 4);
         this.staticAlienSheet = this.staticAlienNorm;
         
+        // time window to steal ship when alien is gone -- only happens here
         this.startcounter = false;
         this.fixcounter = 0;
         this.savedTime = millis();
         this.totalTime = 1000;
-
-
-
         
     }
 
@@ -587,7 +585,7 @@ class marsii extends Scene {
             }
 
             if (this.liquidAlien.dialogCount == 15) {
-                if (this.icepick = false) {
+                if (this.icepick == false) { // maybe true
                     humanDialogL = "You break off pieces with a key and the map";
                     this.frozenmap = true;
                     this.frozenkey = true;
@@ -1207,7 +1205,7 @@ class marsii extends Scene {
                     this.astShip.dialogCount = 15;
                 } else if (this.ebatteryNeed == true) {
                     this.astShip.dialogCount = 17;
-                } else if (this.icepick == false) {
+                } else if (this.icepick == false) { // icepick is surfaced at the beginning
                     this.astShip.dialogCount = 19;
                 } else {
                     this.astShip.dialogCount = 28;

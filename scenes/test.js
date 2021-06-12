@@ -7,14 +7,9 @@ class marsii extends Scene {
 		this.walkdown = loadSpriteSheet('images/marsii/astwalkd.png', 64, 128, 8);
 		this.idle = loadSpriteSheet('images/marsii/astidle.png', 64, 128, 15);
 
-		// add npcs here to loop through and display
-		this.npcs = {};
 
 		var trailSheet = loadSpriteSheet('images/marsii/scenery/crashtrail.png', 546, 90, 1);
 		this.shipTrail = new Scenery(1177, 552, trailSheet);
-
-        const astShipSheet = loadSpriteSheet('images/marsii/npcs/brokenship.png', 353, 188, 1);
-        this.npcs.astShip = new NPC(730, 500, astShipSheet, "Your ship");
 
 		var treeSheet = loadSpriteSheet('images/marsii/scenery/treeoverlayed.png', 1370, 1342, 1);
 		this.treeOverlay = new Scenery(-1950, 80, treeSheet);
@@ -32,35 +27,45 @@ class marsii extends Scene {
 		this.watertree = new Scenery(597, 1225, watertreeSheet);
 
 
+		// add npcs here to loop through and display
+		this.npcs = {};
+
+		const astShipSheet = loadSpriteSheet('images/marsii/npcs/brokenship.png', 353, 188, 1);
+        this.npcs.astShip = new AstShip(730, 500, astShipSheet);
+
+
+
+
 		this.map = new Map();
 		this.map.preload('data/marsii.json');
 	}
 
 	setup() {
+
+		const items = {
+			icepick: new Item('astShip', 'You received the cutting tool', true),
+			empty_battery: new Item('astShip', 'You received the empty battery', true),
+			backuplog: new Item('plantAlien', '?'),
+		};
+
 		this.character = new Character({
 			walkright: loadAnimation(this.walkright),
 			walkleft: loadAnimation(this.walkleft),
 			walkup: loadAnimation(this.walkup),
 			walkdown: loadAnimation(this.walkdown),
 			idle: loadAnimation(this.idle)
-		});
+		}, items);
 		this.character.changeAnimation('idle');
 
 		this.map.setup();
 
-		this.items = {
-			icepick: { has: 'astShip', m: " (You recieved the cutting tool) ", },
-			empty_battery: { has: 'astShip', m: " (You recieved the empty battery) " },
-			backuplog: { has: '' }
-		};
+		
 
 		for (const k in this.npcs) {
 			this.npcs[k].setup()
 		}
 
 		this.shipTrail.setup();
-		
-
 	}
 
 	start() {
@@ -82,7 +87,7 @@ class marsii extends Scene {
 			this.npcs[k].display()
 			if (this.npcs[k].overlap(this.character)) {
 				this.npcs[k].displayDialog(this.character);
-				this.npcs[k].updateDialog();	
+				this.npcs[k].updateDialog(this.character);
 			}
 		}
 
