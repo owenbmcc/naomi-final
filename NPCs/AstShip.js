@@ -11,7 +11,7 @@ class AstShip extends NPC {
 				else go to next 
 				if none are chosen go to default
 			*/
-			/* 1 */ { npc: "Do you need something from your Ship?", response: 'ab', a: ['icepick.surfaced.10', 'empty_battery.surfaced.11'], b: 2, default: 4 },
+			/* 1 */ { npc: "Do you need something from your Ship?", response: 'ab', a: [10, 11], b: 2, default: 4 },
 			/* 2 */ { npc: "Do you need to know what else you need before you take off or Do you want to take off? ", response: 'ab', a: 3, b: 0 },
 
 			/* requirements are for the ship to display what is done */
@@ -25,8 +25,8 @@ class AstShip extends NPC {
 
 			/* item will give item to character 
 				surface will surface an item */
-			/* 10 */ { item: 'icepick', npc: '(You received the cutting tool)', next: 1, },
-			/* 11 */ { item: 'empty_battery', npc: '(You received the empty battery)', next: 1, },
+			/* 10 */ { item: 'icepick', needs: 'surfaced', npc: '(You received the cutting tool)', next: 1, },
+			/* 11 */ { item: 'empty_battery', needs: 'surfaced', npc: '(You received the empty battery)', next: 1, },
 
 
 

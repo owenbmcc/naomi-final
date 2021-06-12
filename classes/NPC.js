@@ -73,12 +73,13 @@ class NPC extends Scenery {
 
 		if (dialog.response && keyIsDown(49) && !this.keysDown.a) {
 			if (Array.isArray(dialog.a)) {
-				const conditions = dialog.a;
+				const options = dialog.a;
 				let newItem = false;
-				for (let i = 0; i < conditions.length; i++) {
-					let [item, property, next] = conditions[i].split('.');
+				for (let i = 0; i < options.length; i++) {
+					const next = options[i];
+					const { item, needs } = this.dialog[next];
 					const charItem = character.items[item];
-					if (property == 'surfaced' && charItem.surfaced && !charItem.collected) {
+					if (needs == 'surfaced' && charItem.surfaced && !charItem.collected) {
 						this.dialogCount = next;
 						newItem = true;
 						break;
