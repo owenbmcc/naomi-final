@@ -74,7 +74,7 @@ class marsii extends Scene {
         this.cosmicAlien.dialogCount = 0;
         //100, 1000
 
-        //Liquid Alien States
+      
         this.liquidAlienNormal = loadSpriteSheet('images/marsii/npcs/liquidAlien.png', 64, 128, 4);
         this.liquidAlienFrozen = loadSpriteSheet('images/marsii/npcs/liquidAlienF.png', 64, 128, 1);
         this.liquidAlienFrozenCut = loadSpriteSheet('images/marsii/npcs/liquidAlienFC.png', 64, 128, 1);
@@ -1217,7 +1217,7 @@ class marsii extends Scene {
 
                 dialog = "You recieved your journal."
                 this.astJournal = true;
-                this.astJournalNeed = false;
+                this.astJournalNeed = false; // is this need or surfaced ... ? can something be un-surfaced?
             } else if (this.astShip.dialogCount == 11.5) {
                 this.astShip.dialogCount == 10
             }

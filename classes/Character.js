@@ -17,7 +17,16 @@ class Character extends Thing {
 	}
 
 	collectItem(label) {
+		// this.items[label].surfaced = true; // if collected it is surfaced ... ? 
 		this.items[label].collected = true;
+	}
+
+	hasSurfaced(label) {
+		return this.items[label].surfaced;
+	}
+
+	hasCollected(label) {
+		return this.items[label].collected;
 	}
 
 	itemStatus(item, property) {

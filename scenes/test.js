@@ -1,40 +1,54 @@
 class marsii extends Scene {
 	preload() {
-		//Main character - Astronaut
-		this.walkright = loadSpriteSheet('images/marsii/astwalkr.png', 64, 128, 8);
-		this.walkleft = loadSpriteSheet('images/marsii/astwalkl.png', 64, 128, 8);
-		this.walkup = loadSpriteSheet('images/marsii/astwalku.png', 64, 128, 8);
-		this.walkdown = loadSpriteSheet('images/marsii/astwalkd.png', 64, 128, 8);
-		this.idle = loadSpriteSheet('images/marsii/astidle.png', 64, 128, 15);
 
+		const anims = {};
+		//Main character - Astronaut
+		anims.walkright = loadSpriteSheet('images/marsii/astwalkr.png', 64, 128, 8);
+		anims.walkleft = loadSpriteSheet('images/marsii/astwalkl.png', 64, 128, 8);
+		anims.walkup = loadSpriteSheet('images/marsii/astwalku.png', 64, 128, 8);
+		anims.walkdown = loadSpriteSheet('images/marsii/astwalkd.png', 64, 128, 8);
+		anims.idle = loadSpriteSheet('images/marsii/astidle.png', 64, 128, 15);
+
+		const scenery = {};
 
 		var trailSheet = loadSpriteSheet('images/marsii/scenery/crashtrail.png', 546, 90, 1);
-		this.shipTrail = new Scenery(1177, 552, trailSheet);
+		scenery.shipTrail = new Scenery(1177, 552, trailSheet);
 
 		var treeSheet = loadSpriteSheet('images/marsii/scenery/treeoverlayed.png', 1370, 1342, 1);
-		this.treeOverlay = new Scenery(-1950, 80, treeSheet);
+		scenery.treeOverlay = new Scenery(-1950, 80, treeSheet);
 
 		var caveSheet = loadSpriteSheet('images/marsii/scenery/caveoverlay.png', 1808, 830, 1);
-		this.caveOverlay = new Scenery(-1365, 1577, caveSheet);
+		scenery.caveOverlay = new Scenery(-1365, 1577, caveSheet);
 
 		var pondSheet = loadSpriteSheet('images/marsii/scenery/pond.png', 848, 810, 5);
-		this.pond = new Scenery(50, 1595, pondSheet);
+		scenery.pond = new Scenery(50, 1595, pondSheet);
 
 		var lightningSheet = loadSpriteSheet('images/marsii/scenery/lightning.png', 1480, 560, 8);
-		this.lightning = new Scenery(220, -700, lightningSheet);
+		scenery.lightning = new Scenery(220, -700, lightningSheet);
 
 		var watertreeSheet = loadSpriteSheet('images/marsii/scenery/watertree.png', 470, 640, 6);
-		this.watertree = new Scenery(597, 1225, watertreeSheet);
+		scenery.watertree = new Scenery(597, 1225, watertreeSheet);
 
+		this.anims = anims;
+		this.scenery = scenery;
 
 		// add npcs here to loop through and display
-		this.npcs = {};
+		const npcs = {};
 
 		const astShipSheet = loadSpriteSheet('images/marsii/npcs/brokenship.png', 353, 188, 1);
-        this.npcs.astShip = new AstShip(730, 500, astShipSheet);
+		npcs.astShip = new AstShip(730, 500, astShipSheet);
 
 
+		//Liquid Alien States
+		const liquidAlienNormal = loadSpriteSheet('images/marsii/npcs/liquidAlien.png', 64, 128, 4);
+		const liquidAlienFrozen = loadSpriteSheet('images/marsii/npcs/liquidAlienF.png', 64, 128, 1);
+		const liquidAlienFrozenCut = loadSpriteSheet('images/marsii/npcs/liquidAlienFC.png', 64, 128, 1);
 
+		npcs.liquidAlien = new LiquidAlien(150, 1200, liquidAlienNormal, "(Needed for map and key(if doing bad route))");
+		npcs.liquidAlien.addAnimation('frozen', liquidAlienFrozen);
+		npcs.liquidAlien.addAnimation('cut', liquidAlienFrozenCut);
+
+		this.npcs = npcs;
 
 		this.map = new Map();
 		this.map.preload('data/marsii.json');
@@ -42,18 +56,35 @@ class marsii extends Scene {
 
 	setup() {
 
+		// maybe don't need this, just add to character ...
+
 		const items = {
-			icepick: new Item('astShip', 'You received the cutting tool', true),
-			empty_battery: new Item('astShip', 'You received the empty battery', true),
-			backuplog: new Item('plantAlien', '?'),
+			// ship
+			icepick: new Item(true),
+			emptyBattery: new Item(true),
+			log: new Item(), // reveals real and fake logs ... better way to handle???
+			realLog: new Item(),
+			fakeLog: new Item(),
+
+			// liquid alien
+			blackHole: new Item(),
+			unmarkedMap: new Item(),
+			frozenMap: new Item(),
+			frozenKey: new Item(),
+
+			// plant alien
+			backupLog: new Item(),
+
+			// cosmic alien
+			astJournal: new Item(),
 		};
 
 		this.character = new Character({
-			walkright: loadAnimation(this.walkright),
-			walkleft: loadAnimation(this.walkleft),
-			walkup: loadAnimation(this.walkup),
-			walkdown: loadAnimation(this.walkdown),
-			idle: loadAnimation(this.idle)
+			walkright: loadAnimation(this.anims.walkright),
+			walkleft: loadAnimation(this.anims.walkleft),
+			walkup: loadAnimation(this.anims.walkup),
+			walkdown: loadAnimation(this.anims.walkdown),
+			idle: loadAnimation(this.anims.idle)
 		}, items);
 		this.character.changeAnimation('idle');
 
@@ -65,7 +96,9 @@ class marsii extends Scene {
 			this.npcs[k].setup()
 		}
 
-		this.shipTrail.setup();
+		for (const k in this.scenery) {
+			this.scenery[k].setup()
+		}
 	}
 
 	start() {
@@ -91,12 +124,9 @@ class marsii extends Scene {
 			}
 		}
 
-		this.shipTrail.display();
-		this.treeOverlay.display();
-		this.caveOverlay.display();
-		this.pond.display();
-		this.watertree.display();
-		this.lightning.display();
+		for (const k in this.scenery) {
+			this.scenery[k].display();
+		}
 
 		this.character.update();
 		this.character.display();

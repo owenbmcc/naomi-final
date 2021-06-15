@@ -3,9 +3,8 @@
 */
 
 class Item {
-	constructor(owner, message, surfaced, collected) {
+	constructor(owner, surfaced, collected) {
 		this.owner = owner;
-		this.message = message;
 		this.surfaced = surfaced || false;
 		this.collected = collected || false;
 	}
