@@ -27,13 +27,13 @@ class AstShip extends NPC {
 				surface will surface an item 
 				needs -- item must be surfaced
 				maybe just needsSurfaced: 'icepick' ... */
-			/* 10 */ { item: 'icepick', needs: 'surfaced', npc: '(You received the cutting tool)', next: 1, },
-			/* 11 */ { item: 'emptyBattery', needs: 'surfaced', npc: '(You received the empty battery)', next: 1, },
-			/* 12 */ { item: 'astJournal', needs: 'surfaced', npc: 'You received your journal.', next: 1 },
-			/* 13 */ { item: 'log', needs: 'surfaced', npc: 'You need to take a log', response: ' [1] Take real log (your only actual record of your travels) || [2] Take fake log (with inaccuarate misleading information) || [3] Cancel Interaction ', a: 14, b: 15, c: 0  },
-			/* 14 */ { human: " *Takes the real log* ", item: 'realLog', needs: 'surfaced', next: 0 },
-			/* 15 */ { human: " *Takes the fake log* ", item: 'fakeLog', needs: 'surfaced', next: 0 },
-			/* 16 */ { item: 'backupLog', needs: 'surfaced', npc: "(You recieved your (non-functional) backup tech)", next: 0, },
+			/* 10 */ { item: 'icepick', needsSurfaced: 'icepick', npc: '(You received the cutting tool)', next: 1, },
+			/* 11 */ { item: 'emptyBattery', needsSurfaced: 'emptyBattery', npc: '(You received the empty battery)', next: 1, },
+			/* 12 */ { item: 'astJournal', needsSurfaced: 'astJournal', npc: 'You received your journal.', next: 1 },
+			/* 13 */ { item: 'log', needsSurfaced: 'log', npc: 'You need to take a log', response: ' [1] Take real log (your only actual record of your travels) || [2] Take fake log (with inaccuarate misleading information) || [3] Cancel Interaction ', a: 14, b: 15, c: 0  },
+			/* 14 */ { human: " *Takes the real log* ", item: 'realLog', needsSurfaced: 'log', next: 0 },
+			/* 15 */ { human: " *Takes the fake log* ", item: 'fakeLog', needsSurfaced: 'log', next: 0 },
+			/* 16 */ { item: 'backupLog', needsSurfaced: 'backupLog', npc: "(You recieved your (non-functional) backup tech)", next: 0, },
 
 
 

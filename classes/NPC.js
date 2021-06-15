@@ -75,7 +75,7 @@ class NPC extends Scenery {
 	checkDialog(index, character) {
 		const { needsCollected, needsSurfaced } = this.dialog[index];
 		if (!needsCollected && !needsSurfaced) return true;
-		if (needsSurfaced && character.hasSurfaced(needsSurfaced)) {
+		if (needsSurfaced && character.hasSurfaced(needsSurfaced) && !character.hasCollected(needsSurfaced)) {
 			return true;
 		}
 		if (needsCollected && character.hasCollected(needsCollected)) {
@@ -164,7 +164,7 @@ class NPC extends Scenery {
 
 		if (keyIsDown(ENTER) && !this.keysDown.enter) {
 			if (!dialog.response && !dialog.isEnd) {
-				if (this.nextIndex) this.dialogIndex = this.nextIndex;
+				if (this.nextIndex !== undefined) this.dialogIndex = this.nextIndex;
 			}
 			this.keysDown.enter = true;
 		} else if (!keyIsDown(ENTER)) {

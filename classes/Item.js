@@ -3,8 +3,7 @@
 */
 
 class Item {
-	constructor(owner, surfaced, collected) {
-		this.owner = owner;
+	constructor(surfaced, collected) {
 		this.surfaced = surfaced || false;
 		this.collected = collected || false;
 	}
