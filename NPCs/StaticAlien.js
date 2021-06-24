@@ -19,7 +19,7 @@ class StaticAlien extends NPC {
 			/* 11 */ { npc: '(It has nothing else to say to you right now)', needsCollected: 'emptyBattery', auto: 13, },
 
 			/* should only show if human does not have battery collected */
-			/* 12 */ { human: "I should go get my battery before I talk to it again", needsSurfaced: 'emptyBattery', auto: [11]  },
+			/* 12 */ { human: "I should go get my battery before I talk to it again", needsSurfaced: 'emptyBattery', auto: 11  },
 
 			/* 13 */ { npc: 'Oh, you got something', needsCollected: ['cJournal', 'emptyBattery'], },
 			/* 14 */ { human: "Yup, it's a chronicle of numerous different species, exactly what you wanted." },
