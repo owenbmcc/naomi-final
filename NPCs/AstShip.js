@@ -3,12 +3,11 @@ class AstShip extends NPC {
 		super(x, y, spriteSheet, 'LightSteelBlue', 'white');
 
 		this.dialog = [
-			/* this number is the index in the dialog list, advanced by dialogCount */
-			/* 0 */ { npc: "Your Ship", next: 1 },
+			/* this number is the index in the dialog list, advanced by dialogIndex */
+			/* 0 */ { npc: "Your Ship" },
 
 			/* ab response, two options, either index number for dialog or options 
-				.surfaced.10 (and now collected) if surfaced go to 10
-				else go to next 
+				tries each index in order to see if it is available
 				if none are chosen go to default
 			*/
 			/* 1 */ { npc: "Do you need something from your Ship?", response: 1, a: [10, 11, 12, 13, 16], b: 2, default: 4 },
