@@ -44,9 +44,17 @@ class marsii extends Scene {
 		const liquidAlienFrozen = loadSpriteSheet('images/marsii/npcs/liquidAlienF.png', 64, 128, 1);
 		const liquidAlienFrozenCut = loadSpriteSheet('images/marsii/npcs/liquidAlienFC.png', 64, 128, 1);
 
-		npcs.liquidAlien = new LiquidAlien(150, 1200, liquidAlienNormal, "(Needed for map and key(if doing bad route))");
+		npcs.liquidAlien = new LiquidAlien(150, 1200, liquidAlienNormal);
 		npcs.liquidAlien.addAnimation('frozen', liquidAlienFrozen);
 		npcs.liquidAlien.addAnimation('cut', liquidAlienFrozenCut);
+
+		const staticAlienNorm = loadSpriteSheet('images/marsii/npcs/staticAlien.png', 64, 128, 8);
+		const staticAlienQC = loadSpriteSheet('images/marsii/npcs/staticAlienqc.png', 64, 128, 8);
+		const staticAlienBad = loadSpriteSheet('images/marsii/npcs/staticAlienbqc.png', 64, 128, 8);
+
+		npcs.staticAlien = new StaticAlien(400, -600, staticAlienNorm);
+		npcs.staticAlien.addAnimation('QC', staticAlienQC);
+		npcs.staticAlien.addAnimation('Bad', staticAlienBad);
 
 		this.npcs = npcs;
 
@@ -56,41 +64,18 @@ class marsii extends Scene {
 
 	setup() {
 
-		// maybe don't need this, just add to character ...
-
-		const items = {
-			// ship
-			icepick: new Item(true),
-			emptyBattery: new Item(true),
-			log: new Item(), // reveals real and fake logs ... better way to handle???
-			realLog: new Item(),
-			fakeLog: new Item(),
-
-			// liquid alien
-			blackHole: new Item(),
-			unmarkedMap: new Item(),
-			frozenMap: new Item(),
-			frozenKey: new Item(),
-
-			// plant alien
-			backupLog: new Item(),
-
-			// cosmic alien
-			astJournal: new Item(),
-		};
-
 		this.character = new Character({
 			walkright: loadAnimation(this.anims.walkright),
 			walkleft: loadAnimation(this.anims.walkleft),
 			walkup: loadAnimation(this.anims.walkup),
 			walkdown: loadAnimation(this.anims.walkdown),
 			idle: loadAnimation(this.anims.idle)
-		}, items);
+		});
 		this.character.changeAnimation('idle');
+		this.character.items['icepick'] = new Item(true); // character starts icepick surfaced
+		this.character.items['emptyBattery'] = new Item(true); // and battery
 
 		this.map.setup();
-
-		
 
 		for (const k in this.npcs) {
 			this.npcs[k].setup()
@@ -113,8 +98,6 @@ class marsii extends Scene {
 		this.map.collide(this.character);
 		this.map.move(this.character);
 		this.map.display();
-
-		
 
 		for (const k in this.npcs) {
 			this.npcs[k].display()

@@ -35,10 +35,6 @@ class AstShip extends NPC {
 			/* 15 */ { human: " *Takes the fake log* ", item: 'fakeLog', needsSurfaced: 'log', next: 0 },
 			/* 16 */ { item: 'backupLog', needsSurfaced: 'backupLog', npc: "(You recieved your (non-functional) backup tech)", next: 0, },
 
-
-
-
-
 		];
 
 		this.requirements = [

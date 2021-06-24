@@ -10,6 +10,7 @@ var scene = 'splash';
 var sceneManager = {};
 sceneManager['splash'] = new Splash();
 sceneManager['marsii'] = new marsii();
+const m = sceneManager['marsii']; // debug
 
 function preload() {
 	for (var s in sceneManager) {

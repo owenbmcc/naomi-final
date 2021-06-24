@@ -1,3 +1,26 @@
+/*
+	added properties to the npcs, managed in invididual classes in NPCs/ directory
+	properties
+
+	most of the data is contained by NPCs and passed to character, items that are surfaced and collected
+
+	textColor -- color of npc dialog/text
+	humanColor -- color for human dialog/text
+	npc -- text displayed by npc
+	human -- text displayed by human
+	next -- next dialog index to load -- leaving out will try to load dialogIndex + 1
+	response -- if human requires response -- num is for default repsonses, string for custom response
+	a -- response option 1 - num goes to next dialog, array tries each option
+	b -- reponse option 2
+	default -- if neither a or b are available
+	item -- string or list -- character collects item 
+	needsSurfaced -- character needs item surfaced to get dialog
+	needsCollected -- character needs item collected
+	auto -- automatically load dialog if the parameters are met
+	isEnd -- end of dialog tree
+
+*/
+
 class NPC extends Scenery {
 	constructor(x, y, spriteSheet, textColor, humanColor) {
 		super(x, y, spriteSheet);
@@ -69,7 +92,6 @@ class NPC extends Scenery {
 				text(requirement.needed, this.x, this.y + 15 - i * 25);
 			}
 		}
-
 	}
 
 	checkDialog(index, character) {
@@ -101,36 +123,29 @@ class NPC extends Scenery {
 		}
 	}
 
-
 	updateDialog(character) {
 		const dialog = this.dialog[this.dialogIndex];
-		this.nextIndex = this.getNextDialog(dialog.next, character); // for displaying enter
+		// calculate the next dialog to start instead of doing it a bunch of time
+		// also to display "hit enter" or not
+		this.nextIndex = this.getNextDialog(dialog.next, character);
 
-		// surface or collect items
-		if (!dialog.read && dialog.item) {
+		// surface or collect items -- read set to prevent multiple events
+		if (!dialog.read) {
 			dialog.read = true;
-			if (Array.isArray(dialog.item)) {
-				dialog.item.forEach(item => {
-					character.collectItem(item);		
-				});
-			} else {
-				character.collectItem(dialog.item);
-			}
-		}
-
-		if (!dialog.read && dialog.surface) {
-			dialog.read = true;
-			character.surfaceItem(dialog.surface);
-		}
-
-		if (!dialog.read && dialog.animation) {
-			dialog.read = true;
-			this.sprite.changeAnimation(dialog.animation);
+			if (dialog.item) character.collectItem(dialog.item);
+			if (dialog.remove) character.removeItem(dialog.remove);
+			if (dialog.surface) character.surfaceItem(dialog.surface);
+			if (dialog.animation) this.sprite.changeAnimation(dialog.animation);
 		}
 
 		// if they needed to collect an item to advance
-		if (dialog.auto == this.nextIndex) {
-			const index = this.getNextDialog(dialog.next, character);
+		if (Array.isArray(dialog.auto)) { // -- yikes
+			const index = this.getNextDialog(dialog.auto, character);
+			if (index) this.dialogIndex = index;
+		}
+
+		if (dialog.auto) {
+			const index = this.getNextDialog(dialog.auto, character);
 			if (index) this.dialogIndex = index;
 		}
 
@@ -163,13 +178,12 @@ class NPC extends Scenery {
 		}
 
 		if (keyIsDown(ENTER) && !this.keysDown.enter) {
-			if (!dialog.response && !dialog.isEnd) {
+			if (!dialog.response && !dialog.isEnd && typeof this.nextIndex === 'number') {
 				if (this.nextIndex !== undefined) this.dialogIndex = this.nextIndex;
 			}
 			this.keysDown.enter = true;
 		} else if (!keyIsDown(ENTER)) {
 			this.keysDown.enter = false;
 		}
-
 	}
 }

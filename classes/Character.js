@@ -5,7 +5,7 @@ class Character extends Thing {
 		for (var a in anims) {
 			this.sprite.addAnimation(a, anims[a]);
 		}
-		this.items = items;
+		this.items = [];
 	}
 
 	display() {
@@ -13,24 +13,43 @@ class Character extends Thing {
 	}
 
 	surfaceItem(label) {
-		this.items[label].surfaced = true;
+		if (!this.items[label]) this.items[label] = new Item(true);
+		else this.items[label].surfaced = true;
 	}
 
-	collectItem(label) {
-		// this.items[label].surfaced = true; // if collected it is surfaced ... ? 
-		this.items[label].collected = true;
+	collectItem(item) {
+		// this.items[label].surfaced = true; // if collected it is surfaced ... ?
+		const items = Array.isArray(item) ? item : [item];
+		items.forEach(label => {
+			if (!this.items[label]) this.items[label] = new Item(true, true);
+			else this.items[label].collected = true;
+		});
+	}
+
+	removeItem(item) {
+		this.items[item].collected = false;
 	}
 
 	hasSurfaced(label) {
+		if (!this.items[label]) return false;
+		if (Array.isArray(label)) {
+			for (let i = 0; i < label.length; i++) {
+				if (!this.items[label]) return false;
+			}
+			return label.every(l => l.surfaced);
+		}
 		return this.items[label].surfaced;
 	}
 
 	hasCollected(label) {
+		if (Array.isArray(label)) {
+			for (let i = 0; i < label.length; i++) {
+				if (!this.items[label[i]]) return false;
+			}
+			return label.every(l => this.items[l].collected);
+		}
+		else if (!this.items[label]) return false;
 		return this.items[label].collected;
-	}
-
-	itemStatus(item, property) {
-		return this.items[property];
 	}
 
 	update() {
